@@ -1,0 +1,73 @@
+<!--index.wxml-->
+<view class="container">
+
+  <text id="primaryTitle" class="title">机械系拾光机学生节</text>
+
+  <view class='imgContainer '>
+    <view wx:for="{{imgUrl}}">
+      <image src='{{item}}' data-img='{{item}}' class='schoolImg' bindtap="showChooseImg" mode="aspectFit"></image>
+    </view>
+  </view>
+
+  <view class="box">
+
+  <view id='ShowChooseImg'>
+
+    <view class='avatarContainer' >
+      <view wx:if="isShowChooseImg">
+        <image src='{{tplImgSrc}}' mode='aspectFit'></image>
+        <view class='imgOverlay'>
+          <image 
+          src='{{backgroundImgSrc}}' 
+          mode='aspectFill' 
+          style="left:{{(-imgOffsetX * imgScale) + 'px'}};top:{{(-imgOffsetY * imgScale) + 'px'}};width:{{(300 * imgScale) + 'rpx'}};height:{{(300 * imgScale * imgAspectRatio) + 'rpx'}}"/>
+        </view>
+      </view>
+    </view>
+
+    <view class='buttons'>
+      <button open-type="getUserInfo"/>
+      <button id='getAvatar' class="myButton" size='mini' type='' bindtap='getAvatar' disabled="{{tplImgSrc == ''}}"> 使用当前头像</button>
+      <button id='selectImg' class="myButton" size='mini' type='' bindtap='getLocalImg' disabled="{{tplImgSrc == ''}}"> 选择图片</button>
+      <button id='getHeadImg' class="myButton" size='mini' type='primary' bindtap='saveImg' data-save='{{tplImgSrc}}'
+        disabled='{{backgroundImgSrc == "" || tplImgSrc == ""}}'>保存头像 </button>
+    </view>
+
+  </view>
+
+
+  <view wx:if="{{tplImgSrc == ''}}" style="text-align:center;margin-bottom:10px;">
+      请先选择一个相框
+  </view>
+</view>
+
+
+  <view wx:if="{{backgroundImgSrc != ''}}">
+    <view id="edit">
+      <!-- 底部原图 -->
+      <image id="editImage" src="{{backgroundImgSrc}}" mode="widthFix"  bindload="onLoadEditImage"></image>
+
+      <movable-area style="height:{{(scrollableHeight + 400) + 'rpx'}}">
+        <movable-view 
+        x="100rpx"
+        y="100rpx"
+        direction="all" 
+        scale="true"
+        scale-max="{{1.5}}"
+        scale-min="0.4"
+        bindchange="didMove"
+        bindscale="didScale"
+        style="width: {{gridWidth + 'rpx'}}; ">
+          <image id="grid" src="../img/grid.png" style="width: {{gridWidth + 'rpx'}}; height: {{gridWidth + 'rpx'}};opacity: 0.8"></image>
+        </movable-view>
+      </movable-area>
+    </view>
+  </view>
+
+</view>
+
+<!-- 将canvas放置在画面外 -->
+<view class='canvasContainer' wx:if='{{isShowCanvas}}'
+  style="position:fixed;top:-500;width:500; height: 500;opacity:0;">
+  <canvas width="500" height="500" style='width:500px; height: 500px;' canvas-id="myCanvas"></canvas>
+</view>
