@@ -9,9 +9,9 @@ const availableSpace = 750.0 * (1 - reservedPaddingProportion);
 // 头像原图宽度，单位为rpx
 const oriImgWidth = availableSpace;
 // 裁剪框左右单侧溢出空间，单位为rpx，请与 index.wxss 保持一致
-const gridOverflowX = 200.0;
+const gridOverflowX = 506.0;
 // 裁剪框上下单侧溢出空间，单位为rpx，请与 index.wxss 保持一致
-const gridOverflowY = 200.0;
+const gridOverflowY = 506.0;
 // 预览框宽度，单位为rpx，请与 index.wxss 保持一致
 const previewWidth = 300.0;
 
@@ -40,10 +40,12 @@ Page({
     imgOffsetX: 0, // 预览界面头像的X方向偏移，单位为px
     imgOffsetY: 0, // 预览界面头像的Y方向偏移，单位为px
     windowWidth: "", // 窗口宽度
+    movableViewX: gridOverflowX + "rpx", // 控制movable-view的x
+    movableViewY: gridOverflowY + "rpx", // 控制movable-view的x
   },
 
   onShareAppMessage: function () {
-  
+
   },
 
   onLoad: function () {
@@ -90,12 +92,16 @@ Page({
         wx.pageScrollTo({
           selector: "#edit",
         })
+
+        this.resetOffset();
       }
     })
   },
 
   // 获取用户当前头像
   getAvatar: function () {
+    this.startLoading();
+
     wx.getUserProfile({
       desc: "获取头像以生成相框",
       success: res1 => {
@@ -112,7 +118,6 @@ Page({
 
         // 将头像下载至本地
         var that = this;
-        this.startLoading();
 
         wx.getImageInfo({
           src: url + "/0",
@@ -124,6 +129,7 @@ Page({
             wx.pageScrollTo({
               selector: "#edit",
             })
+            that.resetOffset();
 
           },
           fail: function (res) {
@@ -133,6 +139,7 @@ Page({
         });
       },
       fail: res => {
+        this.endLoading();
         console.log(res)
       }
     })
@@ -251,14 +258,7 @@ Page({
 
   // 监听裁剪框移动事件
   didMove: function (event) {
-    this.setData({
-      // 重新设置可移动区域的高度
-      scrollableHeight: ((oriImgWidth * this.data.imgAspectRatio) - this.data.gridWidth),
-
-      // 更新偏移
-      imgOffsetX: (event.detail.x - gridOverflowX * this.data.windowWidth / 750) * previewWidth / oriImgWidth,
-      imgOffsetY: (event.detail.y - gridOverflowY * this.data.windowWidth / 750) * previewWidth / oriImgWidth
-    })
+    this.updateOffset(event);
   },
 
   // 监听裁剪框缩放事件
@@ -267,6 +267,32 @@ Page({
     this.setData({
       gridWidth: width,
       imgScale: oriImgWidth / width,
+    })
+    this.updateOffset(event);
+console.log(event)
+  },
+
+  updateOffset: function (event) {
+    this.setData({
+
+      imgOffsetX: (event.detail.x - gridOverflowX * this.data.windowWidth / 750) * previewWidth / oriImgWidth,
+      imgOffsetY: (event.detail.y - gridOverflowY * this.data.windowWidth / 750) * previewWidth / oriImgWidth
+
+    })
+  },
+
+  resetOffset: function() {
+    this.setData({
+      movableViewX: gridOverflowX + "rpx",
+      movableViewY: gridOverflowY + "rpx",
+    })
+  },
+
+  touchDidEnd: function (event) {
+
+    this.setData({
+      // 重新设置可移动区域的高度
+      scrollableHeight: ((oriImgWidth * this.data.imgAspectRatio) - this.data.gridWidth),
     })
 
   },

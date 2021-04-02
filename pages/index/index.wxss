@@ -69,7 +69,7 @@
   width:300rpx;
   height: 300rpx;
   border: 1px solid gainsboro;
-  enable-background: new;
+  background-image: blur(8px);
 }
 
 #ShowChooseImg .imgOverlay {
@@ -143,9 +143,12 @@
   /*
    与 index.js 保持一致
    */
-  top:-200rpx;
-  left:-200rpx;
-  width: 1075rpx;
+  top:-506rpx;
+  left:-506rpx;
+  /* 675(固有宽度)+2*0.5*675*1.5 */
+  width: 1687rpx;
+  /* 675(固有宽度)+1*0.5*675*1.5 */
+  height: 1181rpx;
 }
 
 /* footer */

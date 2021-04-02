@@ -1,63 +1,68 @@
 <!--index.wxml-->
-<view class="container" style="background-image: url('https://cloud.tsinghua.edu.cn/f/e28c786a914642e9b7f6/?dl=1')!important;">
+<view class="container"
+  style="background-image: url('https://cloud.tsinghua.edu.cn/f/e28c786a914642e9b7f6/?dl=1')!important;">
 
-  <image class="headImage" id="topImg" src="https://cloud.tsinghua.edu.cn/f/c271dd98bbd84098a65d/?dl=1" mode="widthFix" />
+  <image class="headImage" id="topImg" src="https://cloud.tsinghua.edu.cn/f/c271dd98bbd84098a65d/?dl=1"
+    mode="widthFix" />
 
-    <view class='imgContainer'>
-      <view wx:for="{{imgUrl}}">
-        <image src='{{item}}' data-img='{{item}}' class='frameImgThumb' bindtap="showChooseImg" mode="aspectFit"></image>
-      </view>
+  <view class='imgContainer'>
+    <view wx:for="{{imgUrl}}">
+      <image src='{{item}}' data-img='{{item}}' class='frameImgThumb' bindtap="showChooseImg" mode="aspectFit"></image>
     </view>
+  </view>
 
-    <view class="box">
+  <view class="box">
 
-      <view id='ShowChooseImg'>
+    <view id='ShowChooseImg'>
 
-        <view class='avatarContainer'>
-          <!-- 这里的 300 与其他文件需要保持一致 -->
-          <view class='imgOverlay'>
-            <image src='{{backgroundImgSrc}}' mode='aspectFill'
-              style="left:{{(-imgOffsetX * imgScale) + 'px'}};top:{{(-imgOffsetY * imgScale) + 'px'}};width:{{(300 * imgScale) + 'rpx'}};height:{{(300 * imgScale * imgAspectRatio) + 'rpx'}}" />
-          </view>
-
-          <image src='{{tplImgSrc}}' mode='aspectFit' class="frameImg"></image>
-
+      <view class='avatarContainer'>
+        <!-- 这里的 300 与其他文件需要保持一致 -->
+        <view class='imgOverlay'>
+          <image src='{{backgroundImgSrc}}' mode='aspectFill'
+            style="left:{{(-imgOffsetX * imgScale) + 'px'}};top:{{(-imgOffsetY * imgScale) + 'px'}};width:{{(300 * imgScale) + 'rpx'}};height:{{(300 * imgScale * imgAspectRatio) + 'rpx'}}" />
         </view>
 
-        <view class='buttons'>
-          <button id='getAvatar' class="plainButton" size='mini' type='default' bindtap='getAvatar'>
-            使用当前头像</button>
-          <button id='selectImg' class="plainButton" size='mini' type='default' bindtap='getLocalImg'> 选择图片</button>
-          <button id='getHeadImg' class="highlightButton" size='mini' type='' bindtap='saveImg'
-            data-save='{{tplImgSrc}}' disabled='{{backgroundImgSrc == "" || tplImgSrc == ""}}'>保存头像 </button>
-        </view>
+        <image src='{{tplImgSrc}}' mode='aspectFit' class="frameImg"></image>
 
       </view>
-      
-    </view>
 
-    <view wx:if="{{backgroundImgSrc != ''}}">
-      <view id="edit">
-        <!-- 底部原图 -->
-        <image id="editImage" src="{{backgroundImgSrc}}" mode="widthFix" bindload="onLoadEditImage"></image>
-
-        <!-- 这里的 400, 200, 200 需要和其他文件保持一致 -->
-        <movable-area style="height:{{(scrollableHeight + 400) + 'rpx'}}">
-          <movable-view x="200rpx" y="200rpx" direction="all" scale="true" scale-max="1.5" scale-min="0.4"
-            bindchange="didMove" bindscale="didScale" style="width: {{gridWidth + 'rpx'}}; ">
-            <image id="grid" src="../img/grid.png"
-              style="width: {{gridWidth + 'rpx'}}; height: {{gridWidth + 'rpx'}};opacity: 0.8"></image>
-          </movable-view>
-        </movable-area>
+      <view class='buttons'>
+        <button id='getAvatar' size='mini' type='default' bindtap='getAvatar'>
+          使用当前头像</button>
+        <button id='selectImg' size='mini' type='default' bindtap='getLocalImg'> 选择图片</button>
+        <button id='getHeadImg' class="highlightButton" size='mini' type='' bindtap='saveImg' data-save='{{tplImgSrc}}'
+          disabled='{{backgroundImgSrc == "" || tplImgSrc == ""}}'>保存头像 </button>
       </view>
 
     </view>
 
-    <image class="headImage" src="https://cloud.tsinghua.edu.cn/f/d413875d9aeb42ed8069/?dl=1" mode="widthFix" style="margin-bottom: -20px" />
+  </view>
 
-    <rich-text id="footerText">
-      机械系学生会文化策划部 出品
-    </rich-text>
+  <view wx:if="{{backgroundImgSrc != ''}}">
+    <view id="edit">
+      <!-- 底部原图 -->
+      <image id="editImage" src="{{backgroundImgSrc}}" mode="widthFix" bindload="onLoadEditImage"></image>
+
+      <!-- 这里的 400, 200, 200, 675 需要和其他文件保持一致 -->
+      <movable-area>
+        <movable-view x="{{movableViewX}}" y="{{movableViewY}}" direction="all" scale="true" scale-max="1.5"
+          scale-min="0.4" bindchange="didMove" bindscale="didScale" bindtouchend="touchDidEnd" style="width: 675rpx ">
+          <image id="grid" src="../img/grid.png" style="width: 675rpx; height: 675rpx;opacity: 0.8"></image>
+        </movable-view>
+      </movable-area>
+    </view>
+
+    <button bindtap="resetOffset" type="default">
+      重置裁剪框
+    </button>
+  </view>
+
+  <image class="headImage" src="https://cloud.tsinghua.edu.cn/f/d413875d9aeb42ed8069/?dl=1" mode="widthFix"
+    style="margin-bottom: -20px" />
+
+  <rich-text id="footerText">
+    机械系学生会文化策划部 出品
+  </rich-text>
 
 
 </view>
