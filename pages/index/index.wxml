@@ -1,73 +1,70 @@
 <!--index.wxml-->
-<view class="container">
+<view class="container" style="background-image: url('https://cloud.tsinghua.edu.cn/f/e28c786a914642e9b7f6/?dl=1')!important;">
 
-  <text id="primaryTitle" class="title">机械系拾光机学生节</text>
+  <image class="headImage" id="topImg" src="https://cloud.tsinghua.edu.cn/f/c271dd98bbd84098a65d/?dl=1" mode="widthFix" />
 
-  <view class='imgContainer '>
-    <view wx:for="{{imgUrl}}">
-      <image src='{{item}}' data-img='{{item}}' class='schoolImg' bindtap="showChooseImg" mode="aspectFit"></image>
-    </view>
-  </view>
-
-  <view class="box">
-
-  <view id='ShowChooseImg'>
-
-    <view class='avatarContainer' >
-      <view wx:if="isShowChooseImg">
-        <image src='{{tplImgSrc}}' mode='aspectFit'></image>
-        <view class='imgOverlay'>
-          <image 
-          src='{{backgroundImgSrc}}' 
-          mode='aspectFill' 
-          style="left:{{(-imgOffsetX * imgScale) + 'px'}};top:{{(-imgOffsetY * imgScale) + 'px'}};width:{{(300 * imgScale) + 'rpx'}};height:{{(300 * imgScale * imgAspectRatio) + 'rpx'}}"/>
-        </view>
+    <view class='imgContainer'>
+      <view wx:for="{{imgUrl}}">
+        <image src='{{item}}' data-img='{{item}}' class='frameImgThumb' bindtap="showChooseImg" mode="aspectFit"></image>
       </view>
     </view>
 
-    <view class='buttons'>
-      <button open-type="getUserInfo"/>
-      <button id='getAvatar' class="myButton" size='mini' type='' bindtap='getAvatar' disabled="{{tplImgSrc == ''}}"> 使用当前头像</button>
-      <button id='selectImg' class="myButton" size='mini' type='' bindtap='getLocalImg' disabled="{{tplImgSrc == ''}}"> 选择图片</button>
-      <button id='getHeadImg' class="myButton" size='mini' type='primary' bindtap='saveImg' data-save='{{tplImgSrc}}'
-        disabled='{{backgroundImgSrc == "" || tplImgSrc == ""}}'>保存头像 </button>
+    <view class="box">
+
+      <view id='ShowChooseImg'>
+
+        <view class='avatarContainer'>
+          <!-- 这里的 300 与其他文件需要保持一致 -->
+          <view class='imgOverlay'>
+            <image src='{{backgroundImgSrc}}' mode='aspectFill'
+              style="left:{{(-imgOffsetX * imgScale) + 'px'}};top:{{(-imgOffsetY * imgScale) + 'px'}};width:{{(300 * imgScale) + 'rpx'}};height:{{(300 * imgScale * imgAspectRatio) + 'rpx'}}" />
+          </view>
+
+          <image src='{{tplImgSrc}}' mode='aspectFit' class="frameImg"></image>
+
+        </view>
+
+        <view class='buttons'>
+          <button id='getAvatar' class="plainButton" size='mini' type='default' bindtap='getAvatar'>
+            使用当前头像</button>
+          <button id='selectImg' class="plainButton" size='mini' type='default' bindtap='getLocalImg'> 选择图片</button>
+          <button id='getHeadImg' class="highlightButton" size='mini' type='' bindtap='saveImg'
+            data-save='{{tplImgSrc}}' disabled='{{backgroundImgSrc == "" || tplImgSrc == ""}}'>保存头像 </button>
+        </view>
+
+      </view>
+      
     </view>
 
-  </view>
+    <view wx:if="{{backgroundImgSrc != ''}}">
+      <view id="edit">
+        <!-- 底部原图 -->
+        <image id="editImage" src="{{backgroundImgSrc}}" mode="widthFix" bindload="onLoadEditImage"></image>
 
+        <!-- 这里的 400, 200, 200 需要和其他文件保持一致 -->
+        <movable-area style="height:{{(scrollableHeight + 400) + 'rpx'}}">
+          <movable-view x="200rpx" y="200rpx" direction="all" scale="true" scale-max="1.5" scale-min="0.4"
+            bindchange="didMove" bindscale="didScale" style="width: {{gridWidth + 'rpx'}}; ">
+            <image id="grid" src="../img/grid.png"
+              style="width: {{gridWidth + 'rpx'}}; height: {{gridWidth + 'rpx'}};opacity: 0.8"></image>
+          </movable-view>
+        </movable-area>
+      </view>
 
-  <view wx:if="{{tplImgSrc == ''}}" style="text-align:center;margin-bottom:10px;">
-      请先选择一个相框
-  </view>
-</view>
-
-
-  <view wx:if="{{backgroundImgSrc != ''}}">
-    <view id="edit">
-      <!-- 底部原图 -->
-      <image id="editImage" src="{{backgroundImgSrc}}" mode="widthFix"  bindload="onLoadEditImage"></image>
-
-      <movable-area style="height:{{(scrollableHeight + 400) + 'rpx'}}">
-        <movable-view 
-        x="100rpx"
-        y="100rpx"
-        direction="all" 
-        scale="true"
-        scale-max="{{1.5}}"
-        scale-min="0.4"
-        bindchange="didMove"
-        bindscale="didScale"
-        style="width: {{gridWidth + 'rpx'}}; ">
-          <image id="grid" src="../img/grid.png" style="width: {{gridWidth + 'rpx'}}; height: {{gridWidth + 'rpx'}};opacity: 0.8"></image>
-        </movable-view>
-      </movable-area>
     </view>
-  </view>
+
+    <image class="headImage" src="https://cloud.tsinghua.edu.cn/f/d413875d9aeb42ed8069/?dl=1" mode="widthFix" style="margin-bottom: -20px" />
+
+    <rich-text id="footerText">
+      机械系学生会文化策划部 出品
+    </rich-text>
+
 
 </view>
+
 
 <!-- 将canvas放置在画面外 -->
 <view class='canvasContainer' wx:if='{{isShowCanvas}}'
-  style="position:fixed;top:-500;width:500; height: 500;opacity:0;">
-  <canvas width="500" height="500" style='width:500px; height: 500px;' canvas-id="myCanvas"></canvas>
+  style="position:fixed;top:-640;width:640; height: 640;opacity:0;">
+  <canvas width="640" height="640" style='width:640px; height: 640px;' canvas-id="myCanvas"></canvas>
 </view>
