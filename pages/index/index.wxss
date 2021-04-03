@@ -38,22 +38,17 @@
   width: 210rpx;
 }
 
-.box {
-  margin-top: 75rpx;
-}
-
-#ShowChooseImg {
+#avatarPreview {
   display: flex;
   flex-wrap: nowrap;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
   width: 625rpx;
-  margin-top: 20px;
-  margin-bottom: 20px;
+  padding-top: 95rpx;
 }
 
-#ShowChooseImg image {
+#avatarPreview image {
   /*
    与 index.js 保持一致
    */
@@ -61,7 +56,7 @@
   height: 300rpx;
 }
 
-#ShowChooseImg .avatarContainer {
+#avatarPreview .avatarContainer {
   position:relative;
   /*
    与 index.js 保持一致
@@ -72,11 +67,11 @@
   background-image: blur(8px);
 }
 
-#ShowChooseImg .imgOverlay {
+#avatarPreview .imgOverlay {
   overflow: hidden;
 }
 
-#ShowChooseImg .imgOverlay {
+#avatarPreview .imgOverlay {
   position: absolute;
   z-index: 1;
   /*
@@ -88,22 +83,22 @@
   left: 0px;
 }
 
-#ShowChooseImg .imgOverlay image {
+#avatarPreview .imgOverlay image {
   position: absolute;
 }
 
-#ShowChooseImg .frameImg {
+#avatarPreview .frameImg {
   position: absolute;
   z-index: 2;
 }
 
-#ShowChooseImg .buttons {
+#avatarPreview .buttons {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
 }
 
-#ShowChooseImg button {
+#avatarPreview button {
   margin: 10px;
 }
 

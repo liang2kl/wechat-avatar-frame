@@ -1,44 +1,50 @@
 <!--index.wxml-->
+
+<!-- 设置背景图，需要用在线图片 -->
 <view class="container"
   style="background-image: url('https://cloud.tsinghua.edu.cn/f/e28c786a914642e9b7f6/?dl=1')!important;">
 
+  <!-- 头图 -->
   <image class="headImage" id="topImg" src="https://cloud.tsinghua.edu.cn/f/c271dd98bbd84098a65d/?dl=1"
     mode="widthFix" />
 
+  <!-- 相框 flex container -->
   <view class='imgContainer'>
     <view wx:for="{{imgUrl}}">
       <image src='{{item}}' data-img='{{item}}' class='frameImgThumb' bindtap="showChooseImg" mode="aspectFit"></image>
     </view>
   </view>
 
-  <view class="box">
 
-    <view id='ShowChooseImg'>
+  <!-- 头像预览 -->
+  <view id='avatarPreview'>
 
-      <view class='avatarContainer'>
-        <!-- 这里的 300 与其他文件需要保持一致 -->
-        <view class='imgOverlay'>
-          <image src='{{backgroundImgSrc}}' mode='aspectFill'
-            style="left:{{(-imgOffsetX * imgScale) + 'px'}};top:{{(-imgOffsetY * imgScale) + 'px'}};width:{{(300 * imgScale) + 'rpx'}};height:{{(300 * imgScale * imgAspectRatio) + 'rpx'}}" />
-        </view>
-
-        <image src='{{tplImgSrc}}' mode='aspectFit' class="frameImg"></image>
-
+    <!-- 头像预览容器 -->
+    <view class='avatarContainer'>
+      <!-- 这里的 300 与其他文件需要保持一致 -->
+      <view class='imgOverlay'>
+        <image src='{{backgroundImgSrc}}' mode='aspectFill'
+          style="left:{{(-imgOffsetX * imgScale) + 'px'}};top:{{(-imgOffsetY * imgScale) + 'px'}};width:{{(300 * imgScale) + 'rpx'}};height:{{(300 * imgScale * imgAspectRatio) + 'rpx'}}" />
       </view>
 
-      <view class='buttons'>
-        <button id='getAvatar' size='mini' type='default' bindtap='getAvatar'>
-          使用当前头像</button>
-        <button id='selectImg' size='mini' type='default' bindtap='getLocalImg'> 选择图片</button>
-        <button id='getHeadImg' class="highlightButton" size='mini' type='' bindtap='saveImg' data-save='{{tplImgSrc}}'
-          disabled='{{backgroundImgSrc == "" || tplImgSrc == ""}}'>保存头像 </button>
-      </view>
+      <image src='{{tplImgSrc}}' mode='aspectFit' class="frameImg"></image>
 
+    </view>
+
+    <!-- 按钮 -->
+    <view class='buttons'>
+      <button id='getAvatar' size='mini' type='default' bindtap='getAvatar'>
+        使用当前头像</button>
+      <button id='selectImg' size='mini' type='default' bindtap='getLocalImg'> 选择图片</button>
+      <button id='getHeadImg' class="highlightButton" size='mini' type='' bindtap='saveImg' data-save='{{tplImgSrc}}'
+        disabled='{{backgroundImgSrc == "" || tplImgSrc == ""}}'>保存头像 </button>
     </view>
 
   </view>
 
+
   <view wx:if="{{backgroundImgSrc != ''}}">
+    <!-- 编辑区域 -->
     <view id="edit">
       <!-- 底部原图 -->
       <image id="editImage" src="{{backgroundImgSrc}}" mode="widthFix" bindload="onLoadEditImage"></image>
@@ -57,6 +63,7 @@
     </button>
   </view>
 
+  <!-- 底部图片 -->
   <image class="headImage" src="https://cloud.tsinghua.edu.cn/f/d413875d9aeb42ed8069/?dl=1" mode="widthFix"
     style="margin-bottom: -20px" />
 

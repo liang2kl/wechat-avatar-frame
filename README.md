@@ -9,8 +9,7 @@
 - 修改小程序项目信息
 - 将 `index.js` 中 `const urls` 中内容改为相框图片的 url
 - 将 `index.wxml` 中 `headImage` 的 `src` 改为头图的网址
-- 将 `index.wxml` 中 `contentContainer` 的 `background-image` 中 url 改为长背景图的 url
-- （可选）修改 `index.js` 中定义的常量，并同步修改其他文件中的值
+- 将 `index.wxml` 中 `container` 的 `background-image` 中 url 改为长背景图的 url
 
 ## 参考
 [Yonghui-Lee

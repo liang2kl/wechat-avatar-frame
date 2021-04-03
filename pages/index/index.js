@@ -32,7 +32,6 @@ Page({
     tplImgSrc: '', // 相框url
     isShowChooseImg: false,
     isShowCanvas: false,
-    isShowSuccess: false,
     gridWidth: oriImgWidth, // 头像缩放框的宽度
     scrollableHeight: oriImgWidth, // movable-area的高度，初始化为宽度
     imgAspectRatio: 1, // 头像原图高宽比
@@ -45,6 +44,10 @@ Page({
   },
 
   onShareAppMessage: function () {
+
+  },
+
+  onShareTimeline: function() {
 
   },
 
@@ -88,9 +91,9 @@ Page({
           backgroundImgSrc: tempFilePaths,
         })
 
-        // 滚动到编辑区域
+        // 滚动到预览区域
         wx.pageScrollTo({
-          selector: "#edit",
+          selector: "#avatarPreview",
         })
 
         this.resetOffset();
@@ -127,7 +130,7 @@ Page({
               backgroundImgSrc: [res.path]
             })
             wx.pageScrollTo({
-              selector: "#edit",
+              selector: "#avatarPreview",
             })
             that.resetOffset();
 
